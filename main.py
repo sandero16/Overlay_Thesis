@@ -1,6 +1,3 @@
-import SimpleITK as sitk
-import matplotlib.pyplot as plt
-import numpy as np
 import os
 import argparse
 from PIL import Image
@@ -56,6 +53,7 @@ def main():
     movingImageString = "town3.bmp"
     resultImageString = "result.png"
     overlay(fixedImageString, movingImageString, resultImageString)
+
 
 if __name__ == "__main__":
     main()
