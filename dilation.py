@@ -14,9 +14,9 @@ kernel = np.ones((5, 5), np.uint8)
 # you want to erode/dilate a given image.
 for i in range(10):
     dilation_factor = i
-    img_erosion = cv2.erode(img, kernel, iterations=1)
+    img_erosion = cv2.erode(img, kernel, iterations=dilation_factor)
     img_dilation = cv2.dilate(img, kernel, iterations=dilation_factor)
 
-    cv2.imwrite('newDilation_'+ str(dilation_factor) + '.jpeg', img_dilation)
+    cv2.imwrite('newErosion_'+ str(dilation_factor) + '.jpeg', img_erosion)
 
 cv2.waitKey(0)

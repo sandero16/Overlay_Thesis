@@ -17,16 +17,28 @@ def make_transparent(name, color):
     datas = img.getdata()
 
     newData = []
+    newDataRed = []
+    newDataBlue = []
+    newDataGreen = []
     for item in datas:
         if item[0] == 0 and item[1] == 0 and item[2] == 0:
             newData.append((0, 0, 0, 0))
+            newDataRed.append((0, 0, 0, 1000))
+            newDataBlue.append((0, 0, 0, 1000))
+            newDataGreen.append((0, 0, 0, 1000))
         else:
             if(color == "new"):
-                newData.append((34,255,0,1000))
+                newData.append((255,255,255,1000))
+            elif(color == "intensities"):
+                newDataRed.append((item[0], 0, 0, 1000))
+                newDataGreen.append((0, item[1], 0, 1000))
+                newDataBlue.append((0, 0, item[2], 1000))
+
             else:
                 newData.append((255,0,0,1000))
-    img.putdata(newData)
-    newName = name.replace(".bmp",".png")
+    img.putdata(newDataBlue)
+    newName = name.replace(".jpeg", "blue.png")
+    #newName = name.replace(".bmp",".png")
     img.save(newName, "PNG")
     return newName
 
@@ -56,5 +68,6 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    #main()
+    make_transparent("satellite.jpeg", "intensities")
 
