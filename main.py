@@ -3,11 +3,11 @@ import argparse
 
 def overlay(background_path, foreground_path, result_path):
     os.system(
-        'magick composite -blend 50 ' + foreground_path + ' ' + background_path + ' ' + result_path)
+        'magick composite -blend 25 ' + foreground_path + ' ' + background_path + ' ' + result_path)
 
 def gif(background_path, foreground_path, result_path):
     os.system(
-        'magick convert -loop 0 -delay 100 ' + foreground_path + ' ' + background_path + ' ' + result_path)
+        'magick convert -loop 0 -delay 100 ' + background_path + ' ' +  foreground_path + ' ' + result_path)
 
 def main():
     """
