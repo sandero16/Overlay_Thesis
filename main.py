@@ -3,7 +3,7 @@ import argparse
 
 def overlay(background_path, foreground_path, result_path):
     os.system(
-        'magick composite -blend 25 ' + foreground_path + ' ' + background_path + ' ' + result_path)
+        'magick composite -blend 35 ' + foreground_path + ' ' + background_path + ' ' + result_path)
 
 def gif(background_path, foreground_path, result_path):
     os.system(
@@ -28,8 +28,8 @@ def main():
 
     for file in file_list:
         name_parts = file.split('.')
-        background_path = './background/' + name_parts[0] + '.png'
-        foreground_path = './foreground/' + name_parts[0] + '.bmp'
+        background_path = './background/' + name_parts[0] + '.jpeg'
+        foreground_path = './foreground/' + name_parts[0] + '.png'
 
         if not FLAGS.gif_mode:
             result_path = './results/' + name_parts[0] + '.png'

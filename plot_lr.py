@@ -39,47 +39,40 @@ def get_data_csv(csv_file):
 
 
 def main():
-    headers_no_probe, dict_no_probe, dict_no_probe_keys = get_data_csv("metrics.csv")
-    headers_probe, dict_probe, dict_probe_keys = get_data_csv("metrics_probe.csv")
+    headers_no_probe, dict_no_probe, dict_no_probe_keys = get_data_csv("run-training-probe-none-exponential-tag-Losses_loss.csv")
+    headers_probe, dict_probe, dict_probe_keys = get_data_csv("lr_with_probe.csv")
 
-    if len(headers_no_probe) != 0: counter = len(headers_no_probe)
-    else : counter = len(headers_probe)
-
-    for i in range(1, counter - 1, 2):
+    for i in range(2, len(headers_no_probe), 2):
         fig = plt.figure()
         plt.tight_layout()
         ax = plt.subplot(111)
 
 
         # no_probe
-        xdata = dict_no_probe.get(dict_no_probe_keys[0])
-        xdata = running_mean(xdata, 1200)
+        xdata = dict_no_probe.get(dict_no_probe_keys[1])
+        xdata = running_mean(xdata, 400)
 
-        plt.plot(xdata, running_mean(dict_no_probe.get(dict_no_probe_keys[i]), 1200), "-b",
-                label="Training basis model")
-        plt.plot(xdata, running_mean(dict_no_probe.get(dict_no_probe_keys[i + 1]), 1200), "-r",
-                label="Validatie basis model")
-
+        plt.plot(xdata, running_mean(dict_no_probe.get(dict_no_probe_keys[i]), 400), color='orange',
+                label="Zonder FCD data")
+        """
         # probe
-        xdata = dict_probe.get(dict_probe_keys[0])
-        xdata = running_mean(xdata, 1200)
-        plt.plot(xdata, running_mean(dict_probe.get(dict_probe_keys[i]), 1200), c="#FC8A00",
-                label="Training voorgesteld model")
-
-        plt.plot(xdata, running_mean(dict_probe.get(dict_probe_keys[i + 1]), 1200), c="m",
-                label="Validatie voorgesteld model")
-
+        xdata = dict_probe.get(dict_probe_keys[1])
+        xdata = running_mean(xdata, 120)
+        plt.plot(xdata, running_mean(dict_probe.get(dict_probe_keys[i]), 120), "-b",
+                label="Met FCD data")
+"""
         # custom plot
         """
         chartBox = ax.get_position()        
         ax.set_position([chartBox.x0, chartBox.y0, chartBox.width * 0.6, chartBox.height])
         ax.legend(loc='upper center', bbox_to_anchor=(1.0, 0.8), shadow=True, ncol=1)
         """
-
+        plt.yscale("log")
         plt.legend(loc='best')
-        plt.xlabel('Iteraties')
-        plt.title(headers_no_probe[i].split('_')[0])
-        fig.savefig("./plots/" + headers_no_probe[i].split('_')[0] + ".png", dpi=fig.dpi)
+        plt.ylabel("Loss (log schaal)")
+        plt.xlabel("Training stap")
+        plt.title("Bepalen leersnelheid (1)")
+        fig.savefig("./plots/" + "Loss_lr_test" + ".png", dpi=fig.dpi)
 
 
 if __name__ == "__main__":
